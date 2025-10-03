@@ -102,10 +102,6 @@ export default function Cart() {
                     </span>
                   )}
                 </div>
-                <div className="text-lg font-bold flex flex-col gap-2">
-                  <span>Quantité: {item.quantity} unités</span>
-                  <span>Totale à payer: {item.quantity * item.prix} FCFA</span>
-                </div>
               </div>
               <Button
                 className="w-full bg-gray-900 hover:bg-gray-800 text-white transition-colors duration-200 group-hover:shadow-md text-sm sm:text-base py-2 sm:py-3"
