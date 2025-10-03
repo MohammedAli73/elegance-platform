@@ -36,18 +36,6 @@ const HomePage = () => {
     <div className="w-full">
       {/* Hero Section */}
       <section className="relative flex flex-col h-[60vh] sm:h-[70vh] min-h-[400px] sm:min-h-[500px] items-center justify-center overflow-hidden">
-        {/* Search Bar - Positioned over hero */}
-        <div className="z-20 w-full max-w-md px-4">
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-800/70 w-5 h-5 z-50" />
-            <input
-              type="text"
-              placeholder="Rechercher des produits..."
-              className="w-full pl-12 pr-4 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white/20 transition-all"
-            />
-          </div>
-        </div>
-
         <div className="absolute inset-0">
           <Image
             src="https://images.pexels.com/photos/974911/pexels-photo-974911.jpeg?auto=compress&cs=tinysrgb&w=1920"
@@ -86,7 +74,7 @@ const HomePage = () => {
               className="border-white bg-white text-gray-900 font-semibold px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg backdrop-blur-sm"
               asChild
             >
-              <Link href="/nouveautes">Voir les nouveautés</Link>
+              <Link href="/categories">Voir les categories</Link>
             </Button>
           </div>
         </div>
@@ -215,8 +203,8 @@ const HomePage = () => {
               className="border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white font-semibold px-6 sm:px-8 py-3 sm:py-4"
               asChild
             >
-              <Link href="/#nouveautes">
-                Voir toutes les nouveautés
+              <Link href="/profil">
+                Voir mon profil
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>

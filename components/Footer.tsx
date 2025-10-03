@@ -4,22 +4,22 @@ import Link from "next/link";
 const Footer = () => {
   const liens = {
     entreprise: [
-      { nom: "À Propos", href: "about" },
-      { nom: "Carrières", href: "/about" },
-      { nom: "Presse", href: "/about" },
-      { nom: "Investisseurs", href: "/about" },
+      { nom: "À Propos", href: "#" },
+      { nom: "Carrières", href: "#" },
+      { nom: "Presse", href: "#" },
+      { nom: "Investisseurs", href: "#" },
     ],
     support: [
-      { nom: "Centre d'aide", href: "/about" },
-      { nom: "Contact", href: "/aboute" },
-      { nom: "Livraisons", href: "/about" },
-      { nom: "Retours", href: "/about" },
+      { nom: "Centre d'aide", href: "#" },
+      { nom: "Contact", href: "/contact" },
+      { nom: "Livraisons", href: "#" },
+      { nom: "Retours", href: "#" },
     ],
     legal: [
-      { nom: "Conditions d'utilisation", href: "/about" },
-      { nom: "Politique de confidentialité", href: "/about" },
-      { nom: "Cookies", href: "/about" },
-      { nom: "CGV", href: "/about" },
+      { nom: "Conditions d'utilisation", href: "#" },
+      { nom: "Politique de confidentialité", href: "#" },
+      { nom: "Cookies", href: "#" },
+      { nom: "CGV", href: "#" },
     ],
   };
 
@@ -52,7 +52,7 @@ const Footer = () => {
                 <Link
                   key={reseau.nom}
                   href={reseau.href}
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors duration-200"
+                  className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors duration-200"
                 >
                   <img src={reseau.icon} className="w-5 h-5 text-white" />
                 </Link>
