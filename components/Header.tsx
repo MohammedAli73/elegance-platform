@@ -1,14 +1,17 @@
 "use client";
 import { useState, useContext } from "react";
 import { cartContext } from "@/hooks/use-cart";
+import { wishContext } from "@/hooks/use-sohaits";
 import Link from "next/link";
 import { ShoppingCart, User, Menu, X, Heart } from "lucide-react";
+import { getCurrentUser } from "@/lib/store";
 
 export default function Header() {
   const cart = useContext(cartContext);
-  console.log(cart);
+  const wish = useContext(wishContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const currentUser = getCurrentUser();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -50,12 +53,6 @@ export default function Header() {
                 Catégories
               </Link>
               <Link
-                href="/nouveautes"
-                className="text-gray-700 hover:text-gray-900 font-medium transition-colors"
-              >
-                Nouveautés
-              </Link>
-              <Link
                 href="/contact"
                 className="text-gray-700 hover:text-gray-900 font-medium transition-colors"
               >
@@ -65,38 +62,82 @@ export default function Header() {
 
             {/* Desktop Actions */}
             <div className="hidden lg:flex items-center space-x-4">
-              <button className="p-2 text-gray-700 hover:text-gray-900 transition-colors relative">
+              <Link
+                href="/mes-sohaits"
+                className="p-2 text-gray-700 hover:text-gray-900 transition-colors relative"
+              >
                 <Heart className="w-6 h-6" />
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  3
+                <span
+                  className={`absolute -top-1 -right-1 bg-red-500 text-white text-xs
+                ${
+                  currentUser && wish.wishItems.length > 0
+                    ? "opacity-100"
+                    : "opacity-0"
+                }
+                   rounded-full w-5 h-5 flex items-center justify-center`}
+                >
+                  {wish.wishItems.length}
                 </span>
-              </button>
-              <button className="p-2 text-gray-700 hover:text-gray-900 transition-colors">
+              </Link>
+              <Link
+                href="/profil"
+                className="p-2 text-gray-700 hover:text-gray-900 transition-colors"
+              >
                 <User className="w-6 h-6" />
-              </button>
-              <button className="p-2 text-gray-700 hover:text-gray-900 transition-colors relative">
-                <ShoppingCart className="w-6 h-6" />
-                <span className="absolute -top-1 -right-1 bg-gray-900 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  2
-                </span>
-              </button>
-            </div>
-
-            {/* Mobile Actions */}
-            <div className="flex lg:hidden items-center space-x-2">
-              <button className="p-2 text-gray-700 hover:text-gray-900 transition-colors relative">
-                <Heart className="w-6 h-6" />
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  3
-                </span>
-              </button>
+              </Link>
               <Link
                 href="/cart"
                 className="p-2 text-gray-700 hover:text-gray-900 transition-colors relative"
               >
                 <ShoppingCart className="w-6 h-6" />
-                <span className="absolute -top-1 -right-1 bg-gray-900 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {cart.cartItems.length && cart.cartItems.length}
+                <span
+                  className={`absolute -top-1 -right-1 bg-gray-900 text-white text-xs
+                ${
+                  cart.cartItems.length > 0 && currentUser
+                    ? "opacity-100"
+                    : "opacity-0"
+                }
+                   rounded-full w-5 h-5 flex items-center justify-center`}
+                >
+                  {cart.cartItems.length}
+                </span>
+              </Link>
+            </div>
+
+            {/* Mobile Actions */}
+            <div className="flex lg:hidden items-center space-x-2">
+              <Link
+                href="/mes-sohaits"
+                className="p-2 text-gray-700 hover:text-gray-900 transition-colors relative"
+              >
+                <Heart className="w-6 h-6" />
+                <span
+                  className={`absolute -top-1 -right-1 bg-red-500 text-white text-xs
+                ${
+                  currentUser && wish.wishItems.length > 0
+                    ? "opacity-100"
+                    : "opacity-0"
+                }
+                   rounded-full w-5 h-5 flex items-center justify-center`}
+                >
+                  {wish.wishItems.length}
+                </span>
+              </Link>
+              <Link
+                href="/cart"
+                className="p-2 text-gray-700 hover:text-gray-900 transition-colors relative"
+              >
+                <ShoppingCart className="w-6 h-6" />
+                <span
+                  className={`absolute -top-1 -right-1 bg-gray-900 text-white text-xs
+                ${
+                  cart.cartItems.length > 0 && currentUser
+                    ? "opacity-100"
+                    : "opacity-0"
+                }
+                   rounded-full w-5 h-5 flex items-center justify-center`}
+                >
+                  {cart.cartItems.length}
                 </span>
               </Link>
               <button
@@ -158,13 +199,6 @@ export default function Header() {
                   Catégories
                 </Link>
                 <Link
-                  href="/nouveautes"
-                  className="block py-3 text-lg font-medium text-gray-700 hover:text-gray-900 transition-colors border-b border-gray-100"
-                  onClick={closeMenu}
-                >
-                  Nouveautés
-                </Link>
-                <Link
                   href="/contact"
                   className="block py-3 text-lg font-medium text-gray-700 hover:text-gray-900 transition-colors border-b border-gray-100"
                   onClick={closeMenu}
@@ -175,27 +209,14 @@ export default function Header() {
 
               {/* Mobile User Actions */}
               <div className="border-t border-gray-200 pt-6 space-y-4">
-                <button
-                  className="flex items-center justify-between w-full py-3 text-gray-700 hover:text-gray-900 transition-colors"
-                  onClick={closeMenu}
-                >
-                  <div className="flex items-center space-x-3">
-                    <Heart className="w-6 h-6" />
-                    <span className="text-lg font-medium">
-                      Liste de souhaits
-                    </span>
-                  </div>
-                  <span className="bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
-                    3
-                  </span>
-                </button>
-                <button
+                <Link
+                  href="/profil"
                   className="flex items-center space-x-3 w-full py-3 text-gray-700 hover:text-gray-900 transition-colors"
                   onClick={closeMenu}
                 >
                   <User className="w-6 h-6" />
                   <span className="text-lg font-medium">Mon compte</span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>

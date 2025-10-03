@@ -1,50 +1,60 @@
-'use client';
+"use client";
 
-import React, { useState, useMemo } from 'react';
-import { Search, Filter, Grid2x2 as Grid, List, SlidersHorizontal } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import ProductCard from '@/components/ProductCard';
-import { products, categories } from '@/lib/data';
-import { Product } from '@/lib/types';
+import React, { useState, useMemo } from "react";
+import { Search, Grid2x2 as Grid, List, SlidersHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import ProductCard from "@/components/ProductCard";
+import { products, categories } from "@/lib/data";
 
 const ProduitsPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<string>('featured');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [sortBy, setSortBy] = useState<string>("featured");
   const [showFilters, setShowFilters] = useState(false);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = products;
 
     // Filtrage par recherche
     if (searchQuery) {
-      filtered = filtered.filter(product =>
-        product.nom.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.marque.toLowerCase().includes(searchQuery.toLowerCase())
+      filtered = filtered.filter(
+        (product) =>
+          product.nom.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.description
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          product.marque.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
     // Filtrage par catégorie
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(product => product.categorie === selectedCategory);
+    if (selectedCategory !== "all") {
+      filtered = filtered.filter(
+        (product) => product.categorie === selectedCategory
+      );
     }
 
     // Tri
     const sorted = [...filtered].sort((a, b) => {
       switch (sortBy) {
-        case 'price-asc':
+        case "price-asc":
           return a.prix - b.prix;
-        case 'price-desc':
+        case "price-desc":
           return b.prix - a.prix;
-        case 'name':
+        case "name":
           return a.nom.localeCompare(b.nom);
-        case 'rating':
+        case "rating":
           return b.note - a.note;
-        case 'newest':
+        case "newest":
           return a.nouveau === b.nouveau ? 0 : a.nouveau ? -1 : 1;
         default:
           return 0;
@@ -73,7 +83,9 @@ const ProduitsPage = () => {
           {/* Sidebar Filters - Desktop */}
           <div className="lg:w-1/4 hidden lg:block">
             <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 sticky top-24">
-              <h3 className="text-lg font-semibold text-gray-900 mb-6">Filtres</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-6">
+                Filtres
+              </h3>
 
               {/* Recherche */}
               <div className="mb-6">
@@ -97,7 +109,10 @@ const ProduitsPage = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Catégorie
                 </label>
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <Select
+                  value={selectedCategory}
+                  onValueChange={setSelectedCategory}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -157,16 +172,16 @@ const ProduitsPage = () => {
                 </div>
                 <div className="flex gap-2">
                   <Button
-                    variant={viewMode === 'grid' ? 'default' : 'outline'}
+                    variant={viewMode === "grid" ? "default" : "outline"}
                     size="sm"
-                    onClick={() => setViewMode('grid')}
+                    onClick={() => setViewMode("grid")}
                   >
                     <Grid className="w-4 h-4" />
                   </Button>
                   <Button
-                    variant={viewMode === 'list' ? 'default' : 'outline'}
+                    variant={viewMode === "list" ? "default" : "outline"}
                     size="sm"
-                    onClick={() => setViewMode('list')}
+                    onClick={() => setViewMode("list")}
                     className="hidden sm:flex"
                   >
                     <List className="w-4 h-4" />
@@ -189,42 +204,51 @@ const ProduitsPage = () => {
                       />
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Catégorie
-                      </label>
-                      <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">Toutes</SelectItem>
-                          {categories.map((category) => (
-                            <SelectItem key={category.id} value={category.id}>
-                              {category.nom}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Catégorie
+                        </label>
+                        <Select
+                          value={selectedCategory}
+                          onValueChange={setSelectedCategory}
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="all">Toutes</SelectItem>
+                            {categories.map((category) => (
+                              <SelectItem key={category.id} value={category.id}>
+                                {category.nom}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Trier par
+                        </label>
+                        <Select value={sortBy} onValueChange={setSortBy}>
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="featured">
+                              Mis en avant
                             </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Trier par
-                      </label>
-                      <Select value={sortBy} onValueChange={setSortBy}>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="featured">Mis en avant</SelectItem>
-                          <SelectItem value="newest">Plus récents</SelectItem>
-                          <SelectItem value="price-asc">Prix croissant</SelectItem>
-                          <SelectItem value="price-desc">Prix décroissant</SelectItem>
-                          <SelectItem value="rating">Mieux notés</SelectItem>
-                          <SelectItem value="name">Nom A-Z</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                            <SelectItem value="newest">Plus récents</SelectItem>
+                            <SelectItem value="price-asc">
+                              Prix croissant
+                            </SelectItem>
+                            <SelectItem value="price-desc">
+                              Prix décroissant
+                            </SelectItem>
+                            <SelectItem value="rating">Mieux notés</SelectItem>
+                            <SelectItem value="name">Nom A-Z</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -233,20 +257,22 @@ const ProduitsPage = () => {
 
             {/* Products Grid */}
             {filteredAndSortedProducts.length > 0 ? (
-              <div className={`grid gap-6 ${
-                viewMode === 'grid' 
-                  ? 'grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
-                  : 'grid-cols-1'
-              }`}>
+              <div
+                className={`grid gap-6 ${
+                  viewMode === "grid"
+                    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+                    : "grid-cols-1"
+                }`}
+              >
                 {filteredAndSortedProducts.map((product, index) => (
                   <div
                     key={product.id}
                     className="animate-in fade-in slide-in-from-bottom duration-500"
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
-                    <ProductCard 
-                      product={product} 
-                      className={viewMode === 'list' ? 'flex flex-row' : ''}
+                    <ProductCard
+                      product={product}
+                      className={viewMode === "list" ? "flex flex-row" : ""}
                     />
                   </div>
                 ))}
@@ -260,13 +286,14 @@ const ProduitsPage = () => {
                   Aucun produit trouvé
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600 mb-6 px-4">
-                  Essayez de modifier vos critères de recherche ou supprimez certains filtres.
+                  Essayez de modifier vos critères de recherche ou supprimez
+                  certains filtres.
                 </p>
                 <Button
                   onClick={() => {
-                    setSearchQuery('');
-                    setSelectedCategory('all');
-                    setSortBy('featured');
+                    setSearchQuery("");
+                    setSelectedCategory("all");
+                    setSortBy("featured");
                   }}
                   variant="outline"
                 >

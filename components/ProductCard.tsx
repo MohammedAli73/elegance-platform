@@ -6,8 +6,10 @@ import Image from "next/image";
 import { Heart, ShoppingCart, Star } from "lucide-react";
 import { Product } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { cartContext } from "@/hooks/use-cart";
+import { wishContext } from "@/hooks/use-sohaits";
+import { getCurrentUser } from "@/lib/store";
 
 interface ProductCardProps {
   product: Product;
@@ -16,6 +18,8 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, className = "" }: ProductCardProps) => {
   const cart = useContext(cartContext);
+  const wish = useContext(wishContext);
+  const [liked, setLiked] = useState<Boolean>(false);
   const prixAffiche =
     product.promotion && product.prixOriginal ? product.prix : product.prix;
 
@@ -24,6 +28,7 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
         ((product.prixOriginal - product.prix) / product.prixOriginal) * 100
       )
     : 0;
+  const currentUser = getCurrentUser();
 
   return (
     <div
@@ -44,8 +49,29 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
       </div>
 
       {/* Wishlist Button */}
-      <button className="absolute top-4 right-4 z-10 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-white">
-        <Heart className="w-4 h-4 text-gray-600 hover:text-red-500 transition-colors duration-200" />
+      <button
+        className={`absolute top-4 right-4 z-10 w-8 h-8 bg-white/80 backdrop-blur-sm 
+          rounded-full flex items-center justify-center 
+          group-hover:opacity-100 transition-opacity duration-200 hover:bg-white
+          ${liked ? "sm:opacity-100" : "sm:opacity-0"}`}
+        onClick={() => {
+          if (!currentUser) {
+            alert("Vous n'est pas connectez");
+            return;
+          } else if (!liked) {
+            setLiked(true);
+            wish.addWish(product);
+          } else {
+            setLiked(false);
+            wish.removeWish(product);
+          }
+        }}
+      >
+        <Heart
+          className={`w-4 h-4 text-gray-600 ${
+            liked && currentUser && "fill-current text-red-500"
+          } transition-colors duration-200`}
+        />
       </button>
 
       {/* Image */}
@@ -113,7 +139,13 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
         <Button
           className="w-full bg-gray-900 hover:bg-gray-800 text-white transition-colors duration-200 group-hover:shadow-md text-sm sm:text-base py-2 sm:py-3"
           disabled={!product.disponible}
-          onClick={() => cart.addItem(product, 1)}
+          onClick={() => {
+            if (!currentUser) {
+              alert("vous n'etes pas connectez");
+              return;
+            }
+            cart.addItem(product, 1);
+          }}
         >
           {product.disponible ? (
             <>

@@ -58,11 +58,11 @@ const ProductDetailPage = ({ params }: ProductDetailPageProps) => {
   const avantages = [
     {
       icon: Truck,
-      text: "Livraison gratuite dès 50€",
+      text: "Livraison gratuite dès 1000 FCFA",
     },
     {
       icon: Shield,
-      text: "Garantie 2 ans",
+      text: "Garantie 2 semaine",
     },
     {
       icon: RotateCcw,
@@ -188,11 +188,11 @@ const ProductDetailPage = ({ params }: ProductDetailPageProps) => {
               {/* Prix */}
               <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
                 <span className="text-2xl sm:text-3xl font-bold text-gray-900">
-                  {product.prix.toFixed(2)} €
+                  {product.prix.toFixed(2)} FCFA
                 </span>
                 {product.prixOriginal && product.promotion && (
                   <span className="text-lg sm:text-xl text-gray-500 line-through">
-                    {product.prixOriginal.toFixed(2)} €
+                    {product.prixOriginal.toFixed(2)} FCFA
                   </span>
                 )}
               </div>

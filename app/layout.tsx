@@ -4,7 +4,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CartContextProvider } from "@/hooks/use-cart";
-
+import { WishContextProvider } from "@/hooks/use-sohaits";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -28,9 +28,11 @@ export default function RootLayout({
         className={`${inter.variable} ${playfair.variable} font-sans antialiased`}
       >
         <CartContextProvider>
-          <Header />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
+          <WishContextProvider>
+            <Header />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+          </WishContextProvider>
         </CartContextProvider>
       </body>
     </html>

@@ -1,34 +1,33 @@
-import React from 'react';
-import Link from 'next/link';
-import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
+import React from "react";
+import Link from "next/link";
 
 const Footer = () => {
   const liens = {
     entreprise: [
-      { nom: 'À Propos', href: '/a-propos' },
-      { nom: 'Carrières', href: '/carrieres' },
-      { nom: 'Presse', href: '/presse' },
-      { nom: 'Investisseurs', href: '/investisseurs' }
+      { nom: "À Propos", href: "about" },
+      { nom: "Carrières", href: "/about" },
+      { nom: "Presse", href: "/about" },
+      { nom: "Investisseurs", href: "/about" },
     ],
     support: [
-      { nom: 'Centre d\'aide', href: '/aide' },
-      { nom: 'Contact', href: '/contact' },
-      { nom: 'Livraisons', href: '/livraisons' },
-      { nom: 'Retours', href: '/retours' }
+      { nom: "Centre d'aide", href: "/about" },
+      { nom: "Contact", href: "/aboute" },
+      { nom: "Livraisons", href: "/about" },
+      { nom: "Retours", href: "/about" },
     ],
     legal: [
-      { nom: 'Conditions d\'utilisation', href: '/conditions' },
-      { nom: 'Politique de confidentialité', href: '/confidentialite' },
-      { nom: 'Cookies', href: '/cookies' },
-      { nom: 'CGV', href: '/cgv' }
-    ]
+      { nom: "Conditions d'utilisation", href: "/about" },
+      { nom: "Politique de confidentialité", href: "/about" },
+      { nom: "Cookies", href: "/about" },
+      { nom: "CGV", href: "/about" },
+    ],
   };
 
   const reseauxSociaux = [
-    { nom: 'Facebook', icon: Facebook, href: '#' },
-    { nom: 'Twitter', icon: Twitter, href: '#' },
-    { nom: 'Instagram', icon: Instagram, href: '#' },
-    { nom: 'YouTube', icon: Youtube, href: '#' }
+    { nom: "Instagram", icon: "/instagram.svg", href: "#" },
+    { nom: "X", icon: "/X.svg", href: "#" },
+    { nom: "TikTok", icon: "/tiktok.svg", href: "#" },
+    { nom: "YouTube", icon: "/youtube.svg", href: "#" },
   ];
 
   return (
@@ -44,7 +43,9 @@ const Footer = () => {
               <span className="text-xl font-bold">ÉléganceShop</span>
             </Link>
             <p className="text-gray-400 mb-6 leading-relaxed">
-              Découvrez notre sélection de produits premium avec une expérience shopping exceptionnelle. Qualité, élégance et service client irréprochable.
+              Découvrez notre sélection de produits premium avec une expérience
+              shopping exceptionnelle. Qualité, élégance et service client
+              irréprochable.
             </p>
             <div className="flex space-x-4">
               {reseauxSociaux.map((reseau) => (
@@ -53,7 +54,7 @@ const Footer = () => {
                   href={reseau.href}
                   className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors duration-200"
                 >
-                  <reseau.icon className="w-5 h-5" />
+                  <img src={reseau.icon} className="w-5 h-5 text-white" />
                 </Link>
               ))}
             </div>
@@ -137,7 +138,7 @@ const Footer = () => {
             © 2025 ÉléganceShop. Tous droits réservés.
           </p>
           <p className="text-gray-400 text-sm mt-4 sm:mt-0">
-            Fait avec ❤️ en France
+            Fait par Mohamed El hadj issa
           </p>
         </div>
       </div>

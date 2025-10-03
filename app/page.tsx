@@ -185,7 +185,7 @@ const HomePage = () => {
       </section>
 
       {/* Nouveautés */}
-      <section className="py-12 sm:py-20">
+      <section className="py-12 sm:py-20" aria-label="noveautes">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-playfair text-gray-900 mb-3 sm:mb-4">
@@ -215,7 +215,7 @@ const HomePage = () => {
               className="border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white font-semibold px-6 sm:px-8 py-3 sm:py-4"
               asChild
             >
-              <Link href="/nouveautes">
+              <Link href="/#nouveautes">
                 Voir toutes les nouveautés
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>

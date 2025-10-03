@@ -2,8 +2,13 @@
 
 import { createContext, useState } from "react";
 import { Product } from "@/lib/types";
+import { clearCart, getCart, addToCart, removeFromCart } from "@/lib/store";
 
-type Items = Product & { quantity: number };
+export type Items = Product & {
+  quantity: number;
+  couleur?: string;
+  taille?: string;
+};
 type CartContextType = {
   cartItems: Items[];
   addItem: Function;
@@ -18,19 +23,25 @@ export const cartContext = createContext<CartContextType>({
 });
 
 export function CartContextProvider({ children }: any) {
-  const [cartItems, setCartItems] = useState<Items[]>([]);
+  const [cartItems, setCartItems] = useState<Items[]>(getCart());
   const addItem = (item: Items, quantity: number) => {
-    if (cartItems.find((i) => i.id === item.id))
+    if (cartItems.find((i) => i.id === item.id)) {
+      addToCart(item, quantity);
       setCartItems((prev) =>
         prev.map((i) =>
           i.id === item.id ? { ...i, quantity: i.quantity + quantity } : i
         )
       );
-    else setCartItems((prev) => [...prev, { ...item, quantity: quantity }]);
+    } else setCartItems((prev) => [...prev, { ...item, quantity: quantity }]);
   };
-  const removeItem = (item: Items) =>
+  const removeItem = (item: Items) => {
+    removeFromCart(item.id);
     setCartItems((prev) => prev.filter((i) => i.id !== item.id));
-  const clearItems = () => setCartItems([]);
+  };
+  const clearItems = () => {
+    clearCart();
+    setCartItems([]);
+  };
   return (
     <cartContext.Provider
       value={{ cartItems, addItem, removeItem, clearItems }}
