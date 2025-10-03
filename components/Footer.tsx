@@ -25,7 +25,7 @@ const Footer = () => {
 
   const reseauxSociaux = [
     { nom: "Instagram", icon: "/instagram.svg", href: "#" },
-    { nom: "X", icon: "/X.svg", href: "#" },
+    { nom: "X", icon: "/x.svg", href: "#" },
     { nom: "TikTok", icon: "/tiktok.svg", href: "#" },
     { nom: "YouTube", icon: "/youtube.svg", href: "#" },
   ];
